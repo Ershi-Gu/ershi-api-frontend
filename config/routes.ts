@@ -1,5 +1,6 @@
 export default [
-  { path: '/', name: '主页', icon: 'smile', component: './Index' },
+  { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
+  { path: '/interface', name: '接口', icon: 'apiOutlined', component: './Index' },
   { path: '/interface_info/:id', name: '查看接口', icon: 'smile', component: './InterfaceInfo', hideInMenu: true },
   {
     path: '/user',
@@ -17,9 +18,8 @@ export default [
     routes: [
       { path: '/admin', redirect: '/admin/interface' },
       { name: '接口管理', icon: 'table', path: '/admin/interface_info', component: './Admin/InterfaceInfo' },
-      // { path: '/admin/sub-page', name: '二级管理页', component: './Admin' },
     ],
   },
-  // { path: '/', redirect: '/welcome' },
+  { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },
 ];

@@ -1,5 +1,5 @@
 import { Footer } from '@/components';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import { userRegisterUsingPost } from '@/services/ershi-api-backend/userController';
 import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCaptcha, ProFormText } from '@ant-design/pro-components';
 import { Helmet, Link, history } from '@umijs/max';
@@ -7,7 +7,6 @@ import { Alert, Button, Tabs, message } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
 import Settings from '../../../../config/defaultSettings';
-import {userRegisterUsingPost} from "@/services/ershi-api-backend/userController";
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -125,8 +124,8 @@ const Register: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src='/logo.jpg' />}
-          title="贰拾-API 接口开放平台"
+          logo={<img alt="logo" src="/logo.svg" />}
+          title="Ershi API 接口开放平台"
           subTitle={'一款免费好用的接口分享平台'}
           // initialValues={{
           //   autoRegister: true,
@@ -143,10 +142,6 @@ const Register: React.FC = () => {
               {
                 key: 'account',
                 label: '账号密码注册',
-              },
-              {
-                key: 'mobile',
-                label: '手机号注册',
               },
             ]}
           />
@@ -167,7 +162,10 @@ const Register: React.FC = () => {
                   {
                     required: true,
                     message: '账号是必填项！',
-                    min: 6, // 账号少于6位
+                  },
+                  {
+                    min: 6, // 账号少于6位,
+                    message: '账号不能少于 6 位',
                   },
                 ]}
               />
@@ -182,7 +180,10 @@ const Register: React.FC = () => {
                   {
                     required: true,
                     message: '密码是必填项！',
-                    min: 8, // 密码少于6位
+                  },
+                  {
+                    min: 8, // 密码少于8位
+                    message: '密码不能少于 8 位',
                   },
                 ]}
               />
@@ -199,76 +200,6 @@ const Register: React.FC = () => {
                     message: '请再次输入密码！',
                   },
                 ]}
-              />
-              {/*<ProFormText*/}
-              {/*  name="invitationCode"*/}
-              {/*  fieldProps={{*/}
-              {/*    size: 'large',*/}
-              {/*    prefix: <LockOutlined />,*/}
-              {/*  }}*/}
-              {/*  placeholder={'请输入邀请码'}*/}
-              {/*  rules={[*/}
-              {/*    {*/}
-              {/*      required: true,*/}
-              {/*      message: '请输入邀请码！',*/}
-              {/*    },*/}
-              {/*  ]}*/}
-              {/*/>*/}
-            </>
-          )}
-
-          {/*{status === 'error' && loginType === 'mobile' && <RegisterMessage content="验证码错误"/>}*/}
-          {type === 'mobile' && (
-            <>
-              <ProFormText
-                fieldProps={{
-                  size: 'large',
-                  prefix: <MobileOutlined />,
-                }}
-                name="mobile"
-                placeholder={'请输入手机号！'}
-                rules={[
-                  {
-                    required: true,
-                    message: '手机号是必填项！',
-                  },
-                  {
-                    pattern: /^1\d{10}$/,
-                    message: '不合法的手机号！',
-                  },
-                ]}
-              />
-              <ProFormCaptcha
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockOutlined />,
-                }}
-                captchaProps={{
-                  size: 'large',
-                }}
-                placeholder={'请输入验证码！'}
-                captchaTextRender={(timing, count) => {
-                  if (timing) {
-                    return `${count} ${'秒后重新获取'}`;
-                  }
-                  return '获取验证码';
-                }}
-                name="captcha"
-                rules={[
-                  {
-                    required: true,
-                    message: '验证码是必填项！',
-                  },
-                ]}
-                onGetCaptcha={async (phone) => {
-                  const result = await getFakeCaptcha({
-                    phone,
-                  });
-                  if (!result) {
-                    return;
-                  }
-                  message.success('获取验证码成功！验证码为：1234');
-                }}
               />
             </>
           )}

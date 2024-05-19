@@ -1,5 +1,4 @@
 import { Footer } from '@/components';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import { userLoginUsingPost } from '@/services/ershi-api-backend/userController';
 import {
   AlipayCircleOutlined,
@@ -113,8 +112,6 @@ const Login: React.FC = () => {
       setUserLoginState(res.message);
       throw new Error(`Login error`)
     } catch (error) {
-      const defaultLoginFailureMessage = '登录失败，请重试！';
-      message.error(defaultLoginFailureMessage);
     }
   };
 
@@ -138,8 +135,8 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/logo.jpg" />}
-          title="贰拾-API 接口开放平台"
+          logo={<img alt="logo" src="/logo.svg" />}
+          title="Ershi API 接口开放平台"
           subTitle={'一款免费好用的接口分享平台'}
           initialValues={{
             autoLogin: true,
@@ -156,10 +153,6 @@ const Login: React.FC = () => {
               {
                 key: 'account',
                 label: '账户密码登录',
-              },
-              {
-                key: 'mobile',
-                label: '手机号登录',
               },
             ]}
           />
@@ -199,81 +192,19 @@ const Login: React.FC = () => {
               />
             </>
           )}
-
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
-          {type === 'mobile' && (
-            <>
-              <ProFormText
-                fieldProps={{
-                  size: 'large',
-                  prefix: <MobileOutlined />,
-                }}
-                name="mobile"
-                placeholder={'请输入手机号！'}
-                rules={[
-                  {
-                    required: true,
-                    message: '手机号是必填项！',
-                  },
-                  {
-                    pattern: /^1\d{10}$/,
-                    message: '不合法的手机号！',
-                  },
-                ]}
-              />
-              <ProFormCaptcha
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockOutlined />,
-                }}
-                captchaProps={{
-                  size: 'large',
-                }}
-                placeholder={'请输入验证码！'}
-                captchaTextRender={(timing, count) => {
-                  if (timing) {
-                    return `${count} ${'秒后重新获取'}`;
-                  }
-                  return '获取验证码';
-                }}
-                name="captcha"
-                rules={[
-                  {
-                    required: true,
-                    message: '验证码是必填项！',
-                  },
-                ]}
-                onGetCaptcha={async (phone) => {
-                  const result = await getFakeCaptcha({
-                    phone,
-                  });
-                  if (!result) {
-                    return;
-                  }
-                  message.success('获取验证码成功！验证码为：1234');
-                }}
-              />
-            </>
-          )}
           <div
             style={{
               marginBottom: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
-              自动登录
-            </ProFormCheckbox>
-            <Space style={{ float: 'right' }} size="small">
-              <Link to="/user/register">新用户注册</Link>
-              <Divider type="vertical" />
-              <a
-                style={{
-                  float: 'right',
-                }}
-              >
-                忘记密码 ?
-              </a>
-            </Space>
+            <Link to="/user/register">新用户注册</Link>
+            <a
+              style={{
+                float: 'right',
+              }}
+            >
+              忘记密码请联系贰拾~
+            </a>
           </div>
         </LoginForm>
       </div>

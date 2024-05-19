@@ -16,9 +16,9 @@ const Settings: ProLayoutProps & {
   fixSiderbar: true,
   colorWeak: false,
   splitMenus: false,
-  title: '贰拾-API 接口开放平台',
+  title: 'Ershi API 接口开放平台',
   pwa: true,
-  logo: '/logo.jpg',
+  logo: '/logo.svg',
   iconfontUrl: '',
   token: {
     // 参见ts声明，demo 见文档，通过token 修改样式

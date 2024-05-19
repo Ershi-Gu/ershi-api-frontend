@@ -133,7 +133,9 @@ const Index: React.FC = () => {
         ...values,
       });
       setInvokeRes(res.data);
-      message.success('请求成功');
+      if (res.code === 0) {
+        message.success('请求成功');
+      }
     } catch (error: any) {
       message.error('操作失败，' + error.message);
     }
@@ -143,11 +145,13 @@ const Index: React.FC = () => {
   const requestInterfaceInvokeCount = async () => {
     const hide = message.loading('正在申请');
     try {
-      await addUserToInterfaceInfoUsingPost({
+      const res = await addUserToInterfaceInfoUsingPost({
         interfaceInfoId: params.id,
       });
       hide();
-      message.success('申请成功');
+      if (res.code === 0) {
+        message.success('申请成功');
+      }
     } catch (error: any) {
       hide();
       message.error('申请失败! ' + error.message);
@@ -162,6 +166,7 @@ const Index: React.FC = () => {
           <Descriptions title={data.name} column={1}>
             <Descriptions.Item label="接口状态">{data.status ? '开启' : '关闭'}</Descriptions.Item>
             <Descriptions.Item label="描述">{data.description}</Descriptions.Item>
+            <Descriptions.Item label="请求主机">{data.host}</Descriptions.Item>
             <Descriptions.Item label="请求地址">{data.url}</Descriptions.Item>
             <Descriptions.Item label="请求方法">{data.method}</Descriptions.Item>
             <Descriptions.Item label="请求参数">{data.requestParams}</Descriptions.Item>
@@ -174,11 +179,15 @@ const Index: React.FC = () => {
         ) : (
           <>接口不存在</>
         )}
-        <Button type="primary" htmlType="submit" onClick={() => {
-          requestInterfaceInvokeCount();
-        }}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={() => {
+            requestInterfaceInvokeCount();
+          }}
+        >
           申请接口调用次数
-        </Button> 剩余调用次数: (回显还没做好 T_T, 点击申请成功后就有 10 次机会)
+        </Button>
       </Card>
       <Divider />
       <Card title="在线测试">

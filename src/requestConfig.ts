@@ -28,20 +28,14 @@ interface ResponseStructure {
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const requestConfig: RequestConfig = {
-  /**
-   * 后端基础调用 URL
-   */
-  // baseURL: 'http://api-backend.guershi.cn:8081',
-  baseURL: 'http://localhost:8081',
-  // 允许携带 cookie
-  withCredentials: true,
 
   // 请求拦截器
   requestInterceptors: [
     (config: RequestOptions) => {
       // 拦截请求配置，进行个性化处理。
-      const url = config?.url?.concat('?token = 123');
-      return { ...config, url };
+      // const url = config?.url?.concat('?token = 123');
+      // return { ...config, url };
+      return config
     },
   ],
 
@@ -51,9 +45,8 @@ export const requestConfig: RequestConfig = {
       // 拦截响应数据，进行个性化处理
       const { data } = response as unknown as ResponseStructure;
 
-      if (data.code !== 0) {
+      if (data?.code !== 0) {
         message.error(data.message);
-        throw new error(data.message);
       }
       return response;
     },

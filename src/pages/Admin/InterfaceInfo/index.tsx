@@ -48,11 +48,13 @@ const InterfaceInfo: React.FC = () => {
   const handleAdd = async (fields: API.InterfaceInfoAddRequest) => {
     const hide = message.loading('正在添加');
     try {
-      await addInterfaceInfoUsingPost({
+      const res = await addInterfaceInfoUsingPost({
         ...fields,
       });
       hide();
-      message.success('创建成功');
+      if (res.code === 0) {
+        message.success('创建成功');
+      }
       actionRef.current?.reload();
       handleModalOpen(false);
       return true;
@@ -77,12 +79,14 @@ const InterfaceInfo: React.FC = () => {
 
     const hide = message.loading('接口修改中');
     try {
-      await updateInterfaceInfoUsingPost({
+      const res = await updateInterfaceInfoUsingPost({
         id: currentRow.id,
         ...fields,
       });
       hide();
-      message.success('接口修改成功');
+      if (res.code === 0) {
+        message.success('接口修改成功');
+      }
       actionRef.current?.reload();
       return true;
     } catch (error) {
@@ -102,11 +106,13 @@ const InterfaceInfo: React.FC = () => {
     const hide = message.loading('正在删除');
     if (!record) return true;
     try {
-      await deleteInterfaceInfoUsingPost({
+      const res = await deleteInterfaceInfoUsingPost({
         id: record.id,
       });
       hide();
-      message.success('接口删除成功');
+      if (res.code === 0) {
+        message.success('接口删除成功');
+      }
       actionRef.current?.reload();
       return true;
     } catch (error: any) {
@@ -126,11 +132,13 @@ const InterfaceInfo: React.FC = () => {
     const hide = message.loading('正在上线');
     if (!record) return true;
     try {
-      await onlineInterfaceInfoUsingPost({
+      const res = await onlineInterfaceInfoUsingPost({
         id: record.id,
       });
       hide();
-      message.success('接口上线成功');
+      if (res.code === 0) {
+        message.success('接口上线成功');
+      }
       actionRef.current?.reload();
       return true;
     } catch (error: any) {
@@ -150,11 +158,13 @@ const InterfaceInfo: React.FC = () => {
     const hide = message.loading('正在上线');
     if (!record) return true;
     try {
-      await offlineInterfaceInfoUsingPost({
+      const res = await offlineInterfaceInfoUsingPost({
         id: record.id,
       });
       hide();
-      message.success('接口下线成功');
+      if (res.code === 0) {
+        message.success('接口下线成功');
+      }
       actionRef.current?.reload();
       return true;
     } catch (error: any) {
@@ -210,25 +220,13 @@ const InterfaceInfo: React.FC = () => {
       title: '请求参数',
       dataIndex: 'requestParams',
       valueType: 'jsonCode',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-          },
-        ],
-      },
+      formItemProps: {},
     },
     {
       title: '请求参数示例',
       dataIndex: 'requestParamsExample',
       valueType: 'jsonCode',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-          },
-        ],
-      },
+      formItemProps: {},
     },
     {
       title: '接口主机',
@@ -257,7 +255,7 @@ const InterfaceInfo: React.FC = () => {
     {
       title: '请求头',
       dataIndex: 'requestHeader',
-      valueType: 'jsonCode',
+      valueType: 'textarea',
       formItemProps: {
         rules: [
           {
@@ -269,7 +267,7 @@ const InterfaceInfo: React.FC = () => {
     {
       title: '响应头',
       dataIndex: 'responseHeader',
-      valueType: 'jsonCode',
+      valueType: 'textarea',
       formItemProps: {
         rules: [
           {
