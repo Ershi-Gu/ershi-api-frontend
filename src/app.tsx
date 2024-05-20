@@ -124,6 +124,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
 export const request = {
   ...requestConfig,
   baseURL:'http://localhost:8081',
-  // baseURL: 'http://api-backend.guershi.cn:8081',
+  // baseURL: 'http://ershi-api-backend:8081',
   withCredentials: true,
 };

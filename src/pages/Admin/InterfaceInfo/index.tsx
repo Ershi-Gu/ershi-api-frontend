@@ -20,7 +20,7 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import '@umijs/max';
-import { Button, Drawer, message } from 'antd';
+import { Button, Drawer, Popconfirm, message } from 'antd';
 import { SortOrder } from 'antd/lib/table/interface';
 import React, { useRef, useState } from 'react';
 
@@ -172,6 +172,14 @@ const InterfaceInfo: React.FC = () => {
       message.error('接口上线失败, ' + error.message);
       return false;
     }
+  };
+
+  const confirm: PopconfirmProps['onConfirm'] = (e) => {
+    console.log(e);
+  };
+
+  const cancel: PopconfirmProps['onCancel'] = (e) => {
+    console.log(e);
   };
 
   const columns: ProColumns<API.InterfaceInfo>[] = [
@@ -342,16 +350,17 @@ const InterfaceInfo: React.FC = () => {
             下线
           </Button>
         ) : null,
-        <Button
-          type={'link'}
-          danger
-          key="offline"
-          onClick={() => {
+
+        <Popconfirm
+          title="确认删除?"
+          onConfirm={() => {
             handleRemove(record);
           }}
         >
-          删除
-        </Button>,
+          <Button type={'link'} danger key="offline">
+            删除
+          </Button>
+        </Popconfirm>,
       ],
     },
   ];
