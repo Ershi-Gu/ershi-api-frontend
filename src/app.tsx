@@ -60,7 +60,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     },
     bgLayoutImgList: [
       {
-        src: 'https://mdn.alipayobjectchildrenRender?: (dom: JSX.Element) => React.ReactNode;s.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
+        src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
         left: 85,
         bottom: 100,
         height: '303px',
