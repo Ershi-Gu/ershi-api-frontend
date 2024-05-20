@@ -6,6 +6,7 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { Link, history } from '@umijs/max';
 import { requestConfig } from './requestConfig';
 import Settings from "../config/defaultSettings";
+import logo from "../public/logo.svg";
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -59,7 +60,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     },
     bgLayoutImgList: [
       {
-        src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
+        src: 'https://mdn.alipayobjectchildrenRender?: (dom: JSX.Element) => React.ReactNode;s.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
         left: 85,
         bottom: 100,
         height: '303px',
@@ -111,6 +112,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       );
     },
     ...initialState?.settings,
+    logo: <img src={logo} />,
   };
 };
 
@@ -121,6 +123,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  */
 export const request = {
   ...requestConfig,
-  baseURL: 'http://localhost:8081',
+  baseURL:'http://localhost:8081',
+  // baseURL: 'http://api-backend.guershi.cn:8081',
   withCredentials: true,
 };

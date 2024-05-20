@@ -166,7 +166,6 @@ const Index: React.FC = () => {
           <Descriptions title={data.name} column={1}>
             <Descriptions.Item label="接口状态">{data.status ? '开启' : '关闭'}</Descriptions.Item>
             <Descriptions.Item label="描述">{data.description}</Descriptions.Item>
-            <Descriptions.Item label="请求主机">{data.host}</Descriptions.Item>
             <Descriptions.Item label="请求地址">{data.url}</Descriptions.Item>
             <Descriptions.Item label="请求方法">{data.method}</Descriptions.Item>
             <Descriptions.Item label="请求参数">{data.requestParams}</Descriptions.Item>
