@@ -20,7 +20,7 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import '@umijs/max';
-import { Button, Drawer, Popconfirm, message } from 'antd';
+import { Button, Drawer, Dropdown, Menu, Popconfirm, Tooltip, message } from 'antd';
 import { SortOrder } from 'antd/lib/table/interface';
 import React, { useRef, useState } from 'react';
 
@@ -187,6 +187,7 @@ const InterfaceInfo: React.FC = () => {
       title: 'id',
       dataIndex: 'id',
       valueType: 'index',
+      width: '50px',
     },
     {
       title: '接口名称',
@@ -211,6 +212,7 @@ const InterfaceInfo: React.FC = () => {
           },
         ],
       },
+      ellipsis: true,
     },
     {
       title: '请求方法',
@@ -228,13 +230,56 @@ const InterfaceInfo: React.FC = () => {
       title: '请求参数',
       dataIndex: 'requestParams',
       valueType: 'jsonCode',
-      formItemProps: {},
+      render: (text) => (
+        <Tooltip
+          title={
+            <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', color: 'white' }}>
+              {text}
+            </pre>
+          }
+          overlayInnerStyle={{ backgroundColor: 'white' }}
+          overlayStyle={{ maxHeight: '120px', maxWidth: '400px' }}
+        >
+          <div
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: 200,
+            }}
+          >
+            {text}
+          </div>
+        </Tooltip>
+      ),
     },
     {
       title: '请求参数示例',
       dataIndex: 'requestParamsExample',
       valueType: 'jsonCode',
       formItemProps: {},
+      render: (text) => (
+        <Tooltip
+          title={
+            <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', color: 'white' }}>
+              {text}
+            </pre>
+          }
+          overlayInnerStyle={{ backgroundColor: 'white' }}
+          overlayStyle={{ maxHeight: '120px', maxWidth: '400px' }}
+        >
+          <div
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: 200,
+            }}
+          >
+            {text}
+          </div>
+        </Tooltip>
+      ),
     },
     {
       title: '接口主机',
@@ -247,6 +292,7 @@ const InterfaceInfo: React.FC = () => {
           },
         ],
       },
+      ellipsis: true,
     },
     {
       title: '接口地址',
@@ -259,6 +305,7 @@ const InterfaceInfo: React.FC = () => {
           },
         ],
       },
+      ellipsis: true,
     },
     {
       title: '请求头',
@@ -271,6 +318,7 @@ const InterfaceInfo: React.FC = () => {
           },
         ],
       },
+      ellipsis: true,
     },
     {
       title: '响应头',
@@ -283,6 +331,7 @@ const InterfaceInfo: React.FC = () => {
           },
         ],
       },
+      ellipsis: true,
     },
     {
       title: '状态',
@@ -304,64 +353,79 @@ const InterfaceInfo: React.FC = () => {
       dataIndex: 'createTime',
       valueType: 'dateTime',
       hideInForm: true,
+      ellipsis: true,
     },
     {
       title: '更新时间',
       dataIndex: 'updateTime',
       valueType: 'dateTime',
       hideInForm: true,
+      ellipsis: true,
     },
     {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      render: (_, record) => [
-        <Button
-          type={'link'}
-          key="config"
-          onClick={() => {
-            handleUpdateModalOpen(true);
-            setCurrentRow(record);
-          }}
-        >
-          修改
-        </Button>,
-        record.status === 0 ? (
-          <Button
-            type={'link'}
-            key="config"
-            onClick={() => {
-              handleOnline(record);
-            }}
-          >
-            上线
-          </Button>
-        ) : null,
-        record.status === 1 ? (
-          <Button
-            // type="text"
-            type={'link'}
-            danger
-            key="online"
-            onClick={() => {
-              handleOFFline(record);
-            }}
-          >
-            下线
-          </Button>
-        ) : null,
-
-        <Popconfirm
-          title="确认删除?"
-          onConfirm={() => {
-            handleRemove(record);
-          }}
-        >
-          <Button type={'link'} danger key="offline">
-            删除
-          </Button>
-        </Popconfirm>,
-      ],
+      ellipsis: true,
+      render: (_, record) => {
+        const menu = (
+          <Menu>
+            <Menu.Item key="edit">
+              <Button
+                type="link"
+                onClick={() => {
+                  handleUpdateModalOpen(true);
+                  setCurrentRow(record);
+                }}
+              >
+                修改
+              </Button>
+            </Menu.Item>
+            {record.status === 0 && (
+              <Menu.Item key="online">
+                <Button
+                  type="link"
+                  onClick={() => {
+                    handleOnline(record);
+                  }}
+                >
+                  上线
+                </Button>
+              </Menu.Item>
+            )}
+            {record.status === 1 && (
+              <Menu.Item key="offline">
+                <Button
+                  type="link"
+                  danger
+                  onClick={() => {
+                    handleOFFline(record);
+                  }}
+                >
+                  下线
+                </Button>
+              </Menu.Item>
+            )}
+            <Menu.Item key="delete">
+              <Popconfirm
+                title="确认删除?"
+                onConfirm={() => {
+                  handleRemove(record);
+                }}
+              >
+                <Button type="link" danger>
+                  删除
+                </Button>
+              </Popconfirm>
+            </Menu.Item>
+          </Menu>
+        );
+        return (
+          <Dropdown overlay={menu} >
+            <Button type={"primary"}>操作</Button>
+          </Dropdown>
+        );
+      },
     },
   ];
   return (

@@ -13,7 +13,15 @@ const InfoCard: React.FC<{
   index: number;
   desc: string;
   href: string;
-}> = ({ title, href, index, desc }) => {
+}> = ({
+  title,
+  href,
+  index,
+  desc,
+  showLink = true,
+  linkText = '了解更多 >',
+  openInNewTab = true,
+}) => {
   const { useToken } = theme;
 
   const { token } = useToken();
@@ -76,9 +84,18 @@ const InfoCard: React.FC<{
       >
         {desc}
       </div>
-      {/*<a href={href} target="_blank" rel="noreferrer">*/}
-      {/*  了解更多 {'>'}*/}
-      {/*</a>*/}
+      {showLink && (
+        <a
+          href={href}
+          target={openInNewTab ? '_blank' : '_self'}
+          rel={openInNewTab ? 'noreferrer' : undefined}
+          onClick={(e) => {
+            if (!openInNewTab) e.stopPropagation();
+          }}
+        >
+          {linkText}
+        </a>
+      )}
     </div>
   );
 };
@@ -139,17 +156,29 @@ const Welcome: React.FC = () => {
             <InfoCard
               index={1}
               title="开始您的 API 开放之旅"
+              href="/user/login"
+              showLink={true}
+              linkText="前往登录 / 注册 >" // 自定义链接文本
+              openInNewTab={false} // 不打开新页面
               desc="👇点击下方进行 注册 / 登录。在使用这款平台之前, 您需要先有一个自己的账号。"
             />
             <InfoCard
               index={2}
-              title="免费的第三方接口"
+              title="前往接口平台页面"
+              href="/interface"
+              showLink={true}
+              linkText="接口平台页面 >" // 自定义链接文本
+              openInNewTab={false} // 不打开新页面
               desc="网站目前提供大量的免费第三方接口, 后续您也可以通过自己上传接口来提供给其他人浏览."
             />
             <InfoCard
               index={3}
               title="了解 云出品"
-              desc="云出品致力于开拓新科技时代, 让更多的人体会到时代的便利。如需了解更多关于云出品的项目,请前往 https://github.com/Ershi-Gu"
+              href="https://github.com/Ershi-Gu"
+              showLink={true}
+              linkText="了解云出品 >" // 自定义链接文本
+              openInNewTab={false} // 不打开新页面
+              desc="云出品致力于开拓新科技时代, 让更多的人体会到时代的便利。如需了解更多关于云出品的项目, 请点击下方连接进行深入了解！"
             />
           </div>
         </div>

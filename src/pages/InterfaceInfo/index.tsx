@@ -192,7 +192,14 @@ const Index: React.FC = () => {
       <Card title="在线测试">
         <Form name="invoke" layout="vertical" onFinish={onFinish}>
           <Form.Item label="请求参数" name="userRequestParams">
-            <Input.TextArea />
+            <Input.TextArea
+              autoSize={{ minRows: 6, maxRows: 12 }}
+              style={{
+                fontFamily: 'monospace',
+                backgroundColor: '#f5f5f5',
+                border: '1px solid #d9d9d9',
+              }}
+            />
           </Form.Item>
           <Form.Item wrapperCol={{ span: 16 }}>
             <Button type="primary" htmlType="submit">
@@ -203,7 +210,17 @@ const Index: React.FC = () => {
       </Card>
       <Divider />
       <Card title="返回结果" loading={invokeLoading}>
-        {invokeRes}
+        <pre
+          style={{
+            fontFamily: 'monospace',
+            backgroundColor: '#f5f5f5',
+            border: '1px solid #d9d9d9',
+            padding: '10px',
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          {invokeRes}
+        </pre>
       </Card>
     </PageContainer>
   );
