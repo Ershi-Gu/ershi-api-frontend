@@ -52,6 +52,14 @@ export async function getLoginUserUsingGet(options?: { [key: string]: any }) {
   });
 }
 
+/** getSignById GET /api/user/get/sign */
+export async function getSignByIdUsingGet(options?: { [key: string]: any }) {
+  return request<API.BaseResponseUserSignVO_>('/api/user/get/sign', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** getUserVOById GET /api/user/get/vo */
 export async function getUserVoByIdUsingGet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -176,6 +184,14 @@ export async function updateMyUserUsingPost(
       'Content-Type': 'application/json',
     },
     data: body,
+    ...(options || {}),
+  });
+}
+
+/** resetUserSign POST /api/user/update/sign */
+export async function resetUserSignUsingPost(options?: { [key: string]: any }) {
+  return request<API.BaseResponseBoolean_>('/api/user/update/sign', {
+    method: 'POST',
     ...(options || {}),
   });
 }

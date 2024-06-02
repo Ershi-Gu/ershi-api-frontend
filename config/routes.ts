@@ -2,6 +2,7 @@ export default [
   { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
   { path: '/interface', name: '接口', icon: 'apiOutlined', component: './Index' },
   { path: '/interface_info/:id', name: '查看接口', icon: 'smile', component: './InterfaceInfo', hideInMenu: true },
+  { path: '/open_sdk', name: '开发平台', icon: 'bugOutlined', component: './OpenSDK'},
   {
     path: '/user',
     layout: false,
